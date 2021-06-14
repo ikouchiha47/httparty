@@ -1,0 +1,24 @@
+[
+  {
+    "exitpoint": 0,
+    "steps": [
+      {
+        "name": "anthem_access_token",
+        "request": {
+          "url": "http://mockbin.org/bin/74471c28-deef-4adf-8ba5-70207bc0601c"
+        }
+      }
+    ]
+  },
+  {
+    "exitpoint": 0,
+    "steps": [
+      {
+        "name": "anthem_plans",
+        "request": {
+          "url": "http://mockbin.org/bin/74471c28-deef-4adf-8ba5-70207bc0601c"
+        }
+      }
+    ]
+  }
+]

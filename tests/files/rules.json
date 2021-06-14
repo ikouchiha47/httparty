@@ -1,0 +1,25 @@
+[
+  {
+    "exitpoint": 1,
+    "steps": [
+      {
+        "name": "anthem_access_token",
+        "request": {
+          "url": "http://mockbin.com/access_token",
+          "method": "POST",
+          "accept": ""
+        }
+      },
+      {
+        "name": "anthem_plans",
+        "requires": ["anthem_access_token"],
+        "request": {
+          "url": "http://mockbin.com/plans",
+          "headers": {
+            "Authorization": "Bearer {{$resp::anthem_access_token::token}}"
+          }
+        }
+      }
+    ]
+  }
+]
