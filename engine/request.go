@@ -48,7 +48,7 @@ func (r Request) AcceptType() string {
 func (r Request) ShouldMakeBody() bool {
 	m := r.ReqMethod()
 
-	return m == "get" || m == "delete"
+	return m == "post" || m == "put" || m == "patch"
 }
 
 func (r Request) MakeGet(body string) (*http.Request, error) {
