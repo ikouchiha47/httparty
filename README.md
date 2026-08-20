@@ -49,7 +49,7 @@ Example:
                 "headers": {
                     "Authorization": "Bearer {{$resp::access_token::token}}"
                 }
-            }
+            },
             "requires": ["access_token"]
         },
        {
@@ -76,5 +76,35 @@ Here:
     - `token` -> is the key in the response body (this could use something like a `jq` style nested json like `.results[0].name`)
     
 
+
+## Live example
+
+`example/` is a real, runnable demo, not a mock at the unit-test level.
+It spins up an actual local HTTP server standing in for an
+OAuth-protected API, and runs a real two-step fleet against it over the
+network:
+
+1. `get_token` POSTs to `/oauth/token`, authenticating with a client
+   secret pulled from a pre-seeded store via `{{$config::client_secret}}`
+   (not a previous step's response - that's what `$resp::` is for).
+2. `get_profile` GETs `/profile`, using the token from step 1's response
+   via `{{$resp::get_token::token}}`. `requires: ["get_token"]` is what
+   makes the engine run step 1 first.
+
+Run it:
+
+```sh
+go run ./example
+```
+
+Expected output:
+
+```
+get_token response:  {map[token:tok_abc123]}
+get_profile response: {map[name:httparty demo user plan:free]}
+```
+
+See `example/main.go` for the mock server and `example/rules.json` for
+the fleet definition.
 
 Thats all folks!

@@ -1,0 +1,28 @@
+[
+  {
+    "exitpoint": 1,
+    "steps": [
+      {
+        "name": "get_token",
+        "request": {
+          "url": "http://127.0.0.1:19191/oauth/token",
+          "method": "POST",
+          "headers": {
+            "X-Client-Secret": "{{$config::client_secret}}"
+          }
+        }
+      },
+      {
+        "name": "get_profile",
+        "requires": ["get_token"],
+        "request": {
+          "url": "http://127.0.0.1:19191/profile",
+          "method": "GET",
+          "headers": {
+            "Authorization": "Bearer {{$resp::get_token::token}}"
+          }
+        }
+      }
+    ]
+  }
+]

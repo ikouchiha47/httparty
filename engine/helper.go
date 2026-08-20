@@ -72,7 +72,11 @@ func GetStepsInOrder(stepper map[string]*Step, stepNames []string) []*Step {
 func GetBodyString(request Request) (string, error) {
 	var bodyStr string
 
-	switch request.Type {
+	// use ReqType(), not the raw Type field: Type is optional in the
+	// JSON rule file and empty by default, but the raw field would never
+	// match either constant below, so every request that omits "type"
+	// (the common case - see README/example) would hit UnknownContentType.
+	switch request.ReqType() {
 	case JSON:
 		return httputils.MakeJSONBody(request.Body)
 	case FormEncoded:
