@@ -19,9 +19,13 @@ func GetParsedString(str string) (map[string][]string, bool) {
 		matched := match[1]
 		parts := strings.Split(matched, "::")
 
-		if len(parts) < 3 && len(parts) > 0 {
-			result[match[0]] = []string{parts[0], parts[1], parts[1]}
-		} else {
+		switch len(parts) {
+		case 1:
+			result[match[0]] = []string{"", "", parts[0]}
+		case 2:
+			// e.g. "$config::client_id" -> prefix=$config, no resKey group, key=client_id
+			result[match[0]] = []string{parts[0], "", parts[1]}
+		default:
 			result[match[0]] = parts
 		}
 	}

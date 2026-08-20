@@ -70,7 +70,11 @@ func (s *Step) getValue(templateStr string, store *collections.OrderedMap) strin
 
 	for matched, values := range parseMap {
 		prefix, resKey, key := values[0], values[1], values[2]
-		if prefix == "" || resKey == "" {
+		if prefix == "" {
+			// a bare, un-prefixed token like {{ever}} is not a store
+			// lookup at all - just substitute the literal key text.
+			// A missing resKey (e.g. "$config::client_id") is NOT this
+			// case - it still has a prefix and needs a real lookup below.
 			templateStr = strings.ReplaceAll(templateStr, matched, key)
 			continue
 		}

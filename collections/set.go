@@ -74,7 +74,7 @@ func (s *StringSet) List() []string {
 	values := make([]string, l)
 
 	for i := range s.k {
-		values[l-i-1] = s.m[i]
+		values[i] = s.m[i]
 	}
 
 	return values

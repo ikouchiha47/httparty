@@ -47,7 +47,16 @@ func Dfs(graph map[string][]string, start string) []string {
 		}
 	}
 
-	return path.List()
+	// path.List() is in DFS visitation order (the node itself first, then
+	// its dependencies as they're discovered). The waterfall needs the
+	// opposite: dependencies executed before the step that requires them.
+	visited := path.List()
+	ordered := make([]string, len(visited))
+	for i, name := range visited {
+		ordered[len(visited)-1-i] = name
+	}
+
+	return ordered
 }
 
 func GetStepsInOrder(stepper map[string]*Step, stepNames []string) []*Step {
